@@ -1,15 +1,23 @@
 // Función que recoge todos los eventos al cargar la pagina
 window.onload = function(){
     let formulario = document.getElementById("form")
-    creacionInputLiteratura();
+    
 
     formulario.addEventListener("submit", event=>{
+        console.log("Entra dentro addEventListener para todook");
         let todoOk = validacionesFormulario(event);
         if(todoOk){
             window.open("./ventana.html", "pop-up", "width=500px height=300px");
             event.preventDefault();
         }
     },false);
+
+    let select = document.getElementById("select");
+    select.addEventListener("change", event =>{
+        console.log("Entra dentro del select");
+        creacionInputLiteratura();
+    },false);
+
 
     // llamar diversos métodos
     // tooltip
@@ -18,14 +26,12 @@ window.onload = function(){
 
 // Funcióon que reliza la validación del formulario
 function validacionesFormulario(event){
-    let todoOk = true;
+    
     // validación nombre
     let nombreLibro = document.getElementById("nombreLibro");
     if(!nombreLibro.validity.valid){
         console.log("Entra if");
-        nombreLibro.style.background = "red";
         event.preventDefault();
-        todoOk = false;
     } else {
         nombreLibro.style.color = "black";
         console.log("Entra else");
@@ -35,9 +41,7 @@ function validacionesFormulario(event){
     let identificador = document.getElementById("identificador");
     if(!identificador.validity.valid){
         console.log("entra if identificador");
-        identificador.style.background = "red";
-        event.preventDefault();
-        todoOk = false;
+        event.preventDefault();    
     } else {
         identificador.style.color = "black";
     }
@@ -45,40 +49,34 @@ function validacionesFormulario(event){
     // validación de fecha
     let fecha = document.getElementById("fecha")
     if(!fecha.validity.valid){
-        fecha.style.background = "red";
         event.preventDefault();
-        todoOk = flase;
     } else {
         fecha.style.color = "black";
     }
     // validación numero copias
-    /**************************************Preguntar como se valida fecha y numero copias */
-    /**************************************Preguntar como escoger borde para validación */
+
     let numCopias = document.getElementById("numCopias")
     if(!numCopias.validity.valid){
-        numCopias.style.background = "red";
         event.preventDefault();
-        todoOk = false;
     } else{
         numCopias.style.background = "black";
     }
     // validación de la edad recomendada
     let edad = document.getElementById("edad");
     if(!edad.validity.valid){
-        edad.style.background = "red";
         event.preventDefault();
     } else {
         edad.style.background = "black";
     }
-    // validación de las obversaciones
+
 }
 
  // creación de campoMas si selecciona literatura infantil
- /********************************************************Preguntar como escoger cuando se elecciona literatura */
  function creacionInputLiteratura(){
-    let value2 = document.getElementById("valor2");
-
-    if(value2 == "Infantil"){
+    let valor2 = document.getElementById("valor2").value;
+    console.log(valor2);
+    // finalizar bien con otro tipo de comprobacion
+    if(valor2 == 2){
         console.log("Entra en creacionInputLiteratura()");
         let campoInput = document.getElementById("campoMas");
         let labelCampo = document.createElement("label");
@@ -93,8 +91,35 @@ function validacionesFormulario(event){
         campo.setAttribute("name","literaturaCampo");
         campo.setAttribute("type","text");
         campo.setAttribute("required","");
-    }
+    } 
+    
  }
 
  // funcion que recoge listener  ¿Pensando que hacer?
 
+
+ // Funciones del tercer div
+
+ function avisoRojo(){
+
+    let date = new Date();
+    let diaSemana = date.getDay();
+
+    // controlar día de la semana
+    if(diaSemana == 6,7 ){
+        alert("Estas dentro de la jornada laboral")
+        
+    } else {
+        alert("Es fin de semana")
+    }
+
+    // controlar hora
+    let hora = date.getHours();
+
+
+
+    //alert("Meter contenido más variables");
+    // ese aviso que quiero meter con letras es una variable modificando tamaño, etc
+    // if(date.getDay() == 3){ alert("dentro del dia")} else {"Es fin de semana"}
+
+ }
