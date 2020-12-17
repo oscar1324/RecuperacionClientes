@@ -9,55 +9,55 @@
 </head>
 <body>
     <div id="container">
-        <div id="izquierdo">
-            <h2>tete</h2>
-        </div>
-        <div id="formulario">
-            <form id="form" method="GET" action="#" novalidate>
-                <fieldset>
-                    <legend>Formulario</legend>
+        <div id="contenidoCentral">
+            <div id="derecho">
+                <h2>Imprimir contenido aqui</h2>
+            </div>
+            <div id="formulario">
+                <form id="form" method="POST" action="#" novalidate>
                     <fieldset>
-                        <label>Literatura: </label>
-                        <select name="Literatura">
+                        <legend>Formulario</legend>
+                        <fieldset>
+                            <label>Literatura: </label>
+                            <select name="Literatura" id="select">
                             <option value="1">Elige...</option>
-                        <option value="2" id="valor2">Infantil</option>
-                        <option value="3">Juvenil</option>
-                        <option value="4">Adulta</option>
-                    </select>
-                </fieldset>
-                <fieldset>
-                    <label for="nombreLibro">Nombre del libro: </label>
-                    <input id="nombreLibro" type="text" required><br>
-        
-                    <label for="identificador">Identificador:</label>
-                    <input id="identificador" type="text" required><br>
-        
-                    <label for="fecha">Año de publicación:</label> <!--no podrá ser posterior a la fecha que se esta introdciendo, se almacena el año-->
-                    <input id="fecha" type="date"  required><br>
-        
-                    <label for="numCopias">Número de copias</label>
-                    <input id="numCopias" type="number" min="1" max="99" > <!-- máximo dos cifras--><br>
+                            <option value="2" id="valor2">Infantil</option>
+                            <option value="3">Juvenil</option>
+                            <option value="4">Adulta</option>
+                        </select>
+                    </fieldset>
+                    <fieldset>
+                        <label for="nombreLibro">Nombre del libro: </label>
+                        <input id="nombreLibro" class="datoInput" type="text" required><br>
+            
+                        <label for="identificador">Identificador:</label>
+                        <input id="identificador" class="datoInput" type="text" required><br>
+            
+                        <label for="fecha">Año de publicación:</label> <!--no podrá ser posterior a la fecha que se esta introdciendo, se almacena el año-->
+                        <input id="fecha" class="datoInput" type="date"  required><br>
+            
+                        <label for="numCopias">Número de copias</label>
+                        <input id="numCopias" class="datoInput" type="number" min="1" max="99" required> <!-- máximo dos cifras--><br>
+    
+                        <label>Edad recomendada:</label> 
+                        <input id="edad" type="number" class="datoInput" min="1" max="10"required ><br> <!-- preguntar como validar 0/1-->
+    
+                        <label>Observaciones:</label>
+                        <textarea id="zonaTexto" maxlength="150" required></textarea><br>
+                       
+                       
+                    </fieldset>
+                    <fieldset id="campoMas">
+                        <p>Preguntar como selecciono selecct infantil</p>
+                    </fieldset>
+                    </fieldset>
 
-                    <label>Edad recomendada:</label> 
-                    <input id="edad" type="number" min="1" max="10" ><br>
-
-                    <label>Observaciones:</label>
-                    <textarea id="zonaTexto" maxlength="150" ></textarea><br>
-                    <!-- Al igual que con la tarjeta de aquel ejericcio, tengo que crear un campo nuevo si se selecciona literatura infantil-->
-                   
-                </fieldset>
-                <fieldset id="campoMas">
-                    <p>Preguntar como selecciono selecct infantil</p>
-                </fieldset>
-                </fieldset>
-
-
-
-                <input type="submit" name="Enviar">
-            </form>
-        </div>
-        <div id="derecho">
-            <h2>derecha</h2>
+                    <input type="submit" name="Enviar" onclick="rellenarObjetosArray();" id="boton">
+                </form>
+            </div>
+            <div id="abajo">
+                <h2>abajo</h2>
+            </div>
         </div>
     </div>
 </body>

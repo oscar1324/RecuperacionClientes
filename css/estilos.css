@@ -5,26 +5,46 @@ body{
 #container{
     margin-left: 5px;
     margin-right: 5px;
+    width: 2050px;
+    height: 100%;
 }
-#izquierdo{
+
+/*******  Contenedores centrales *******/
+#contenidoCentral{
+    border: 1px solid black;
+    width: 100% ;
+    height: 500px;
+}
+
+#derecho{
     border: 1px black solid;
-    width: 30%;
+    width: 47%;
     height: 500px;
     background-color: rgb(37, 179, 223);
-    float: left;
+    float: right;
 }
 #formulario{
     border: 1px black solid;
-    width: 37%;
+    width: 50%;
     height: 500px;
     background-color: yellow;
     float: left;
 }
-#derecho{
+#abajo{
     border: 1px black solid;
-    width: 30%;
-    height: 500px;
+    width: 100%;
+    height: 250px;
     background-color: rgb(230, 77, 77);
     float: left;
     
+}
+
+input:invalid{
+    border: 3px solid red;
+}
+
+textarea:focus, input:focus, input[type]:focus {
+    border-color: red;
+    box-shadow: 0 3px 3px rgba(229, 103, 23, 0.075)inset, 0 0 8px red;
+    outline: 0 none;
 }
