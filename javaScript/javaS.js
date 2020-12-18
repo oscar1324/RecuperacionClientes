@@ -6,70 +6,108 @@ class Libro {
         this.identificador = identificador;
         this.añoPublicacion = añoPublicacion;
         this.numCopias = numCopias;
-        this.edadReco = nombedadRecore;
         this.edadReco = edadReco;
         // no sé si añadir observaciones, supongo que si
     }
 }
 
-class LibroLiteratura extends Libro{
+class LibroInfantil extends Libro{
     constructor(nombre,identificador, añoPublicacion, numCopias, edadReco, fecha){
         super(nombre,identificador, añoPublicacion, numCopias, edadReco);
         this.fecha = fecha;
     }
 }
 
-class LibroJuvenil extends Libro{
-    constructor(nombre,identificador, añoPublicacion, numCopias, edadReco, fecha){
-        super(nombre,identificador, añoPublicacion, numCopias, edadReco);
-        this.fecha = fecha;
-    }
-}
-
-class LibroAdulto extends Libro{
-    constructor(nombre,identificador, añoPublicacion, numCopias, edadReco, fecha){
-        super(nombre,identificador, añoPublicacion, numCopias, edadReco);
-        this.fecha = fecha;
-    }
-}
 // crear objetos además de variables donde meto los valores para rellenar obejtos
-
-// variables:
-
-//var tipoLibro = new Array(,,);
-//var nombre = new Array(,,,,);
-//var identificador = new Array();
-//var anoPublicacion = new Array();
-//var edadRecomendada = new Array();
+var arrayLibros = [];  // aquí dentro van los objetos-
 
 
-function rellenarObjetosArray (){
-    var arrayInput = new Array();
-    var inputsValues = document.getElementsByClassName("datoInput"); // ingresamos todo aquí
+function recogidaDatosFormulario(){
 
-    nameValues =[].map.call(inputsValues,function(dataInput){
-        arrayInput.push(dataInput.value);// cuando lo recorra lo va a meter aquí todo
-        console.log(dataInput);
-    }); // parecido al foreach, recorre todo
-    arrayInput.forEach(function(inputsValuesData){
-        console.log("Datos obtenidos: " +inputsValuesData); // cada vezz imprime el contenido
-    });
+    // luego colocarlo en ultima posición p
+    let nombreLibro = document.getElementById("nombreLibro").value;
+    let identificador = document.getElementById("identificador").value;
+    let fecha = document.getElementById("fecha").value;
+    let numCopias = document.getElementById("numCopias").value;
+    let edad = document.getElementById("edad").value;
+
+    let libroMas = new Libro(nombreLibro,identificador,fecha,numCopias,edad);
+    console.log(libroMas);
+    
+    arrayLibros = JSON.parse(localStorage.getItem("miarray") || "[]");
+
+   /*metemos el libro en el array */
+
+
+    
+
+    arrayLibros.forEach(elemento => { 
+                                    console.log(elemento.identificador);
+                                    if (elemento.identificador == document.getElementById("identificador").value){
+                                        console.log("coincide")
+                                        
+                                        elemento.numCopias ++;
+                                        console.log("Lo incrementa");
+                                        
+                                    } else {
+                                        console.log("no coincide")
+                                        arrayLibros.push(libroMas);
+                                    }
+                                    });
+                                    console.log(arrayLibros);
+     if(arrayLibros.length == 0) {
+         arrayLibros.push(libroMas); 
+         console.log(arrayLibros);
+     }     
+     
+    /*Almacenamos el array en el localstorage */
+    localStorage.setItem("miarray", JSON.stringify(arrayLibros));
+
+    /**
+     * 
+     *        for(i=0; i < arrayLibros.length; i++){
+        console.log("Los identificadores: " + arrayLibros[i].identificador);
+        if(idFormulario !== arrayLibros[i].identificador){
+            let nombreLibro = document.getElementById("nombreLibro").value;
+            let identificador = document.getElementById("identificador").value;
+            let fecha = document.getElementById("fecha").value;
+            let numCopias = document.getElementById("numCopias").value;
+            let edad = document.getElementById("edad").value;
+        
+            let libroMas = new Libro(nombreLibro,identificador,fecha,numCopias,edad);
+            arrayLibros.push(libroMas);
+            console.log("Se ha dado de alta");
+            return 1;
+
+        } else if(idFormulario == arrayLibros[i].identificador) {
+            arrayLibros[i].numCopias ++;
+            return 2;
+        }
+       
+    }
+     */
+
+    // SI LO METO DENTRO DL BUCLE NO ME RECOGE VALORES
+
+
 }
 
 
+/********************************************************************************** */
 // Función que recoge todos los eventos al cargar la pagina
 window.onload = function(){
     let formulario = document.getElementById("form")
     
 
     formulario.addEventListener("submit", event=>{
+        event.preventDefault();
         console.log("Entra dentro addEventListener para todook");
         // preguntar por qué no se mete
         let todoOk = validacionesFormulario(event);
-       
-        if(todoOk){
-            window.open("./ventana.html", "pop-up", "width=500px height=300px");
-            event.preventDefault();
+        console.log(todoOk);
+        if(!todoOk){
+            console.log("okok");
+           window.open("./ventana.html", "pop-up", "width=500px height=300px");
         }
     },false);
 
@@ -84,59 +122,86 @@ window.onload = function(){
     // tooltip
     // los que sean
 } 
-
+// variable global para recoger errores
+var meterErrores;
 // Funcióon que reliza la validación del formulario
 function validacionesFormulario(event){
     let todoOK= true;
     // validación nombre
-    let nombreLibro = document.getElementById("nombreLibro");
-    if(!nombreLibro.validity.valid){
+    let nombreLibro = document.getElementById("nombreLibro").value;
+    let tengoNombre = nombreLibro;
+    
+    if(!document.getElementById("nombreLibro").validity.valid){
         console.log("Entra if");
-        nombreLibro.style.color = "red";
+       // nombreLibro.style.color = "red";
+        document.getElementById("nombreLibro").color= "red";
         event.preventDefault();
         todoOK= false;
+        meterErrores.innerHTML += "<p>" + "Error en el nombre: " + tengoNombre + "</p>";
     } else {
-        nombreLibro.style.color = "black";
+       // nombreLibro.style.color = "black";
+        document.getElementById("nombreLibro").color= "black";
     }
 
     // validación del identificador
-    let identificador = document.getElementById("identificador");
-    if(!identificador.validity.valid){
+    let identificador = document.getElementById("identificador").value;
+    let tengoIdentificador = identificador;
+    if(!document.getElementById("identificador").validity.valid){
         console.log("entra if identificador");
         identificador.style.color = "red";
         event.preventDefault();   
         todoOK= false;
+        meterErrores.innerHTML += "<p>" + "Error en el identificador: " + tengoIdentificador + "</p>";
     } else {
-        identificador.style.color = "black";
+        console.log(" valida fecha");
+       // identificador.style.color = "black";
     }
 
     // validación de fecha
-    let fecha = document.getElementById("fecha")
-    if(!fecha.validity.valid){
+    let fecha = document.getElementById("fecha").value;
+    let tengoFecha = fecha;
+    if(!document.getElementById("fecha").validity.valid){
         fecha.style.color = "red";
         event.preventDefault();
         todoOK= false;
+        meterErrores.innerHTML += "<p>" + "Error en la fecha: " + tengoFecha + "</p>";
     } else {
-        fecha.style.color = "black";
+        console.log(" valida fecha");
+        document.getElementById("fecha").style.color = "black";
+     //   fecha.style.color = "black";
     }
     // validación numero copias
-
-    let numCopias = document.getElementById("numCopias")
+    /**
+     * 
+    let numCopias = document.getElementById("numCopias").value;
+    let tengonumCopias = numCopias;
     if(!numCopias.validity.valid){
         numCopias.style.color = "red";
         event.preventDefault();
         todoOK= false;
-    } 
+        console.log("no valida numCopias");
+        meterErrores.innerHTML += "<p>" + "Error en la fecha: " + tengonumCopias + "</p>";
+    } else {
+        console.log(" valida numCopias");
+        numCopias.style.color = "black";
+    }
     // validación de la edad recomendada
-    let edad = document.getElementById("edad");
+    let edad = document.getElementById("edad").value;
+    let tengoEdad = edad;
     if(!edad.validity.valid){
         edad.style.color = "red";
         event.preventDefault();
         todoOK= false;
-
+        console.log("no valida edad");
+        meterErrores.innerHTML += "<p>" + "Error en la edad: " + tengoEdad + "</p>";
+    } else {
+        console.log(" valida edad");
+        edad.style.color = "black";
     }
 
-
+     * 
+     */
+    return todoOK;
 
     /**
      * 
@@ -213,8 +278,6 @@ function validacionesFormulario(event){
 
     }
     let idTimeout = setTimeout(mensajeHora,3000); // algo parecido
-
-
 
     //alert("Meter contenido más variables");
     // ese aviso que quiero meter con letras es una variable modificando tamaño, etc
