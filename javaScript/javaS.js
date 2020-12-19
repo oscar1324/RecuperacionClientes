@@ -37,10 +37,6 @@ function recogidaDatosFormulario(){
     arrayLibros = JSON.parse(localStorage.getItem("miarray") || "[]");
 
    /*metemos el libro en el array */
-
-
-    
-
     arrayLibros.forEach(elemento => { 
                                     console.log(elemento.identificador);
                                     if (elemento.identificador == document.getElementById("identificador").value){
@@ -112,14 +108,6 @@ window.onload = function(){
            window.open("./ventana.html", "pop-up", "width=500px height=300px");
         }
     },false);
-
-    let select = document.getElementById("select");
-    select.addEventListener("change", event =>{
-        console.log("Entra dentro del select");
-        creacionInputLiteratura();
-    },false);
-
-
     // llamar diversos métodos
     // tooltip
     // los que sean
@@ -131,8 +119,14 @@ window.onload = function(){
     document.getElementById("form").addEventListener('submit',validacionesFormulario,false); 
     document.getElementById("form").addEventListener('submit',imprimir,false); 
     document.getElementById("form").addEventListener('submit',avisoRojo,false);
-
+    document.getElementById("select").addEventListener("change", event =>{
+        console.log("Entra dentro del select");
+        creacionInputLiteratura();
+    },false);
 }
+
+
+
 
 /** Impresión de datos */
 function imprimir(){
@@ -158,9 +152,6 @@ function validacionesFormulario(event){
     
     let todoOK= true;
     // validación nombre
-    let nombreLibro = document.getElementById("nombreLibro").value;
-    let tengoNombre = nombreLibro;
-    
     if(!document.getElementById("nombreLibro").validity.valid){
         console.log("Entra if");
         document.getElementById("nombreLibro").color= "red";
@@ -174,9 +165,6 @@ function validacionesFormulario(event){
     }
 
     // validación del identificador
-    let identificador = document.getElementById("identificador").value;
-    let tengoIdentificador = identificador;
-
     if(!document.getElementById("identificador").validity.valid){
         console.log("entra if identificador");
         event.preventDefault();   
@@ -187,68 +175,68 @@ function validacionesFormulario(event){
     }
 
     // validación de fecha
-    let fecha = document.getElementById("fecha").value;
-    let tengoFecha = fecha;
     if(!document.getElementById("fecha").validity.valid){
         event.preventDefault();
         todoOK= false;
+        var hoy = new Date();
+        if(!document.getElementById("fecha").value > hoy){
+            console.log("Entra en if fecha");
+            event.preventDefault();
+            ventana.document.write("Error en las observaciones " + "<br>" );
+        } 
         ventana.document.write("Error en la fecha" + "<br>");
     } else {
-        console.log("Entra black");
+        console.log(" valida fecha");
         document.getElementById("fecha").style.color = "black";
      //   fecha.style.color = "black";
     }
+
     // validación numero copias
-    /**
-     * 
-    let numCopias = document.getElementById("numCopias").value;
-    let tengonumCopias = numCopias;
-    if(!numCopias.validity.valid){
-        numCopias.style.color = "red";
+    if(!document.getElementById("numCopias").validity.valid){
         event.preventDefault();
         todoOK= false;
-        console.log("no valida numCopias");
-        ventana.document.write("Error en el identificador");
+        ventana.document.write("Error en el número de copias" + "<br>");
     } else {
         console.log(" valida numCopias");
-        numCopias.style.color = "black";
+        document.getElementById("numCopias").style.color = "black";
     }
 
     // validación de la edad recomendada
-    let edad = document.getElementById("edad").value;
-    let tengoEdad = edad;
-    if(!edad.validity.valid){
-        edad.style.color = "red";
+    if(!document.getElementById("edad").validity.valid){
         event.preventDefault();
         todoOK= false;
-        console.log("no valida edad");
-        ventana.document.write("Error en el identificador");
+        ventana.document.write("Error en la edad" + "<br>");
     } else {
         console.log(" valida edad");
-        edad.style.color = "black";
+        document.getElementById("edad").style.color = "black";
     }
 
-     * 
-     */
-    return todoOK;
-
-    /**
-     * 
-     *     // validación de observación
-    let observacion = document.getElementById("zonaTexto");
-    if(!edad.validity.valid){
+    // validación de observación
+    if(!document.getElementById("zonaTexto").validity.valid){
         event.preventDefault();
+        ventana.document.write("Error en las observaciones " + "<br>" );
     } else{
         console.log("error validación");
     }
 
-     */
+     // validación de creacionInput
+    if(!document.getElementById("literaturaCampo").validity.valid){
+     event.preventDefault();
+      ventana.document.write("Error en literaturaCampo " + "<br>" );
+    } else{
+        console.log("error validación");
+    }
+
+    return todoOK;
+
 }
 
  // creación de campoMas si selecciona literatura infantil
  function creacionInputLiteratura(){
     let valor2 = document.getElementById("valor2").value;
-    console.log(valor2);
+    let valor3 = document.getElementById("valor3").value;
+    let valor4 = document.getElementById("valor4").value;
+    console.log("valor: " + valor2);
     // finalizar bien con otro tipo de comprobacion
     if(valor2 == 2){
         console.log("Entra en creacionInputLiteratura()");
@@ -269,9 +257,6 @@ function validacionesFormulario(event){
     
  }
 
- // funcion que recoge listener  ¿Pensando que hacer?
-
-
  // Funciones del tercer div
 
  function avisoRojo(){
@@ -281,7 +266,11 @@ function validacionesFormulario(event){
    let diaSemana = date.getDay();
 
     // controlar hora
-    let hora = date.getHours();
+    let idInterval=setInterval(function() {
+        let date = new Date();
+        let hora = date.getHours();
+         console.log(hora);
+    }, 60000);
 
     // variable div
     let div = document.getElementById("abajo");
@@ -295,7 +284,7 @@ function validacionesFormulario(event){
         div.appendChild(p1);
         document.getElementById('boton').disabled=false;
 
-    } else if( 9 < hora < 19) {
+    } else if( 9 < idInterval < 19) {
         p2.innerHTML = "Seccion de alta abierta";
         div.appendChild(p2);
         document.getElementById('boton').disabled=true;
