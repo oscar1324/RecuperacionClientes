@@ -94,7 +94,9 @@ function recogidaDatosFormulario(){
 
 
 /********************************************************************************** */
-// Función que recoge todos los eventos al cargar la pagina
+
+/**
+ * // Función que recoge todos los eventos al cargar la pagina
 window.onload = function(){
     let formulario = document.getElementById("form")
     
@@ -122,10 +124,38 @@ window.onload = function(){
     // tooltip
     // los que sean
 } 
-// variable global para recoger errores
-var meterErrores;
-// Funcióon que reliza la validación del formulario
+
+ * 
+ */
+window.onload = function(){
+    document.getElementById("form").addEventListener('submit',validacionesFormulario,false); 
+    document.getElementById("form").addEventListener('submit',imprimir,false); 
+    document.getElementById("form").addEventListener('submit',avisoRojo,false);
+
+}
+
+/** Impresión de datos */
+function imprimir(){
+    let divEscribir;
+    let contenidoFinal = " ";
+
+    divEscribir = document.getElementById("contenidoCentral");
+
+    for(i=0; i < arrayLibros.length;i++){
+        //contenidoFinal += "<p>" +
+        console.log(arrayLibros[i]); 
+    }
+}
+
+
+
+
+
+
+// Función que reliza la validación del formulario
 function validacionesFormulario(event){
+    ventana =  window.open("./ventana.html", "pop-up", "width=500,height=300, toolbar=false, menubar=false, location=false");
+    
     let todoOK= true;
     // validación nombre
     let nombreLibro = document.getElementById("nombreLibro").value;
@@ -133,40 +163,38 @@ function validacionesFormulario(event){
     
     if(!document.getElementById("nombreLibro").validity.valid){
         console.log("Entra if");
-       // nombreLibro.style.color = "red";
         document.getElementById("nombreLibro").color= "red";
         event.preventDefault();
         todoOK= false;
-        meterErrores.innerHTML += "<p>" + "Error en el nombre: " + tengoNombre + "</p>";
+       ventana.document.write("Error en el nombre" + "<br>");
+        
     } else {
-       // nombreLibro.style.color = "black";
+        console.log("Entra black");
         document.getElementById("nombreLibro").color= "black";
     }
 
     // validación del identificador
     let identificador = document.getElementById("identificador").value;
     let tengoIdentificador = identificador;
+
     if(!document.getElementById("identificador").validity.valid){
         console.log("entra if identificador");
-        identificador.style.color = "red";
         event.preventDefault();   
         todoOK= false;
-        meterErrores.innerHTML += "<p>" + "Error en el identificador: " + tengoIdentificador + "</p>";
+        ventana.document.write("Error en el identificador" + "<br>");
     } else {
-        console.log(" valida fecha");
-       // identificador.style.color = "black";
+        console.log("Entra black");
     }
 
     // validación de fecha
     let fecha = document.getElementById("fecha").value;
     let tengoFecha = fecha;
     if(!document.getElementById("fecha").validity.valid){
-        fecha.style.color = "red";
         event.preventDefault();
         todoOK= false;
-        meterErrores.innerHTML += "<p>" + "Error en la fecha: " + tengoFecha + "</p>";
+        ventana.document.write("Error en la fecha" + "<br>");
     } else {
-        console.log(" valida fecha");
+        console.log("Entra black");
         document.getElementById("fecha").style.color = "black";
      //   fecha.style.color = "black";
     }
@@ -180,11 +208,12 @@ function validacionesFormulario(event){
         event.preventDefault();
         todoOK= false;
         console.log("no valida numCopias");
-        meterErrores.innerHTML += "<p>" + "Error en la fecha: " + tengonumCopias + "</p>";
+        ventana.document.write("Error en el identificador");
     } else {
         console.log(" valida numCopias");
         numCopias.style.color = "black";
     }
+
     // validación de la edad recomendada
     let edad = document.getElementById("edad").value;
     let tengoEdad = edad;
@@ -193,7 +222,7 @@ function validacionesFormulario(event){
         event.preventDefault();
         todoOK= false;
         console.log("no valida edad");
-        meterErrores.innerHTML += "<p>" + "Error en la edad: " + tengoEdad + "</p>";
+        ventana.document.write("Error en el identificador");
     } else {
         console.log(" valida edad");
         edad.style.color = "black";
@@ -247,40 +276,34 @@ function validacionesFormulario(event){
 
  function avisoRojo(){
 
-    let date = new Date();
-    let diaSemana = date.getDay();
-
     // controlar día de la semana
-    if(diaSemana == 6,7 ){
-        alert("Estas dentro de la jornada laboral")
-        
-    } else {
-        alert("En días festivos no es posible dar de alta a nuevos lirbos.")
-        // boton de formulario desactivar
-        document.getElementById('boton').disabled=false;
-    }
+    let date = new Date();
+   let diaSemana = date.getDay();
 
     // controlar hora
     let hora = date.getHours();
-    let horaComienzo = '9:00';
-    let horaFinal = '19:00';
 
-    // comprobar hora y fehca cada segundo con timeso
-    if(horaComienzo < hora> horaFinal){
-        alert("Sección abierta");
+    // variable div
+    let div = document.getElementById("abajo");
+    let p1 = document.createElement("p");
+    let p2 = document.createElement("p");
+    let p3 = document.createElement("p");
+
+    
+    if((diaSemana == 6,7) ){
+        p1.innerHTML= "En días festivos no es posible dar de alta a nuevos libros.";
+        div.appendChild(p1);
+        document.getElementById('boton').disabled=false;
+
+    } else if( 9 < hora < 19) {
+        p2.innerHTML = "Seccion de alta abierta";
+        div.appendChild(p2);
         document.getElementById('boton').disabled=true;
-    } else{
-        alert("Esta fuera del horario. Solo es posible dar de alta libro");
+
+    } else {
+        p2.innerHTML = "Esta fuera del horario. Solo es posible dar de alta libros de lunes a viernes de 9:00 a 19:00";
+        div.appendChild(p3);
     }
 
-    let mensajeHora = function(segundo){
-        alert('Tiemout que se ejecuta pasados ' + segundos +'segundos');
 
-    }
-    let idTimeout = setTimeout(mensajeHora,3000); // algo parecido
-
-    //alert("Meter contenido más variables");
-    // ese aviso que quiero meter con letras es una variable modificando tamaño, etc
-    // if(date.getDay() == 3){ alert("dentro del dia")} else {"Es fin de semana"}
-
- }
+}

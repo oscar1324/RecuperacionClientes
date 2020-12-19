@@ -10,16 +10,7 @@ window.onload= () => {
     let edad = document.getElementById("edad");
     let zonaTexto = document.getElementById("zonaTexto");
 
-
-
-        
-    divEmerg.innerHTML += "<p>" + "Error en nombre : "          +  + "<br>"  + "</p>" ;
-    divEmerg.innerHTML += "<p>" + "Error en identificador: "    +  + "<br>"  + "</p>";
-    divEmerg.innerHTML += "<p>" + "Error en fecha:"             +  + "<br>"  + "</p>";
-    divEmerg.innerHTML += "<p>" + "Error en edad recomendada: " +  + "<br>"  + "</p>";
-    divEmerg.innerHTML += "<p>" +  "Error en observaciones: "   +  + "<br>"  + "</p>";
-
-
+     document.getElementById("p0").innerHTML = ("Se ha producido un error en nombre");
     
     /**
      *    parrafo.innerHTML += "<p>" + "Error en nombre: " + + "</p>" ;

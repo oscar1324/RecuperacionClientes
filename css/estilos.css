@@ -29,6 +29,7 @@ body{
     height: 500px;
     background-color: yellow;
     float: left;
+
 }
 #abajo{
     border: 1px black solid;
@@ -36,6 +37,10 @@ body{
     height: 250px;
     background-color: rgb(230, 77, 77);
     float: left;
+    color: red;
+    font-size: 35px;
+    text-align: center;
+
     
 }
 
@@ -47,4 +52,33 @@ textarea:focus, input:focus, input[type]:focus {
     border-color: red;
     box-shadow: 0 3px 3px rgba(229, 103, 23, 0.075)inset, 0 0 8px red;
     outline: 0 none;
+}
+
+
+/* Tooltip*/
+.tooltip {
+    position: relative;
+    display: inline-block;
+    border-bottom: 1px dotted black;
+}
+.tooltip .tiptext {
+    visibility: hidden;
+    width: 120px;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    border-radius: 3px;
+    padding: 6px 0;
+    position: absolute;
+    z-index: 1;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+}
+.tooltip .tiptext::after {
+    content: "";
+    position: absolute;
+    border-width: 5px;
+    border-style: solid;
+}
+.tooltip:hover .tiptext {
+    visibility: visible;
 }
