@@ -260,39 +260,96 @@ function validacionesFormulario(event){
  // Funciones del tercer div
 
  function avisoRojo(){
+ 
+        // controlar día de la semana
+        let date = new Date();
+        let diaSemana = date.getDay();
+        console.log(diaSemana);
+     
+         // controlar hora
+         let idInterval=setInterval(function() {
+             let date = new Date();
+             let hora = date.getHours();
+              console.log(hora);
+         }, 1000);
+     
+         
+     
+         // variable div
+         let div = document.getElementById("abajo");
+         let p1 = document.createElement("p");
+     
+     
+         if(diaSemana == 1){
+             p1.innerHTML =" Seccion de alta abierta";
+             div.appendChild(p1);
+         } else if(diaSemana == 2){
+             p1.innerHTML = "Seccion de alta abierta";
+             div.appendChild(p1);
+             document.getElementById('boton').disabled=true;
+     
+         } else if(diaSemana == 3){
+             p1.innerHTML = "Seccion de alta abierta";
+             div.appendChild(p1);
+             document.getElementById('boton').disabled=true;
+     
+         } else if(diaSemana == 4){
+             p1.innerHTML = "Seccion de alta abierta";
+             div.appendChild(p1);
+             document.getElementById('boton').disabled=true;
+     
+         } else if(diaSemana == 5){
+             p1.innerHTML = "Seccion de alta abierta";
+             div.appendChild(p1);
+             document.getElementById('boton').disabled=true;
+     
+         } else if(diaSemana == 6){
+             p1.innerHTML= "En días festivos no es posible dar de alta a nuevos libros.";
+             div.appendChild(p1);
+             document.getElementById('boton').disabled=false;
+     
+         } else if(diaSemana == 0){
+             
+             p1.innerHTML= "En días festivos no es posible dar de alta a nuevos libros.";
+             div.appendChild(p1);
+             document.getElementById('boton').disabled=false;
+         } else if( 9 < idInterval < 19) {
+             console.log(idInterval);
+             p1.innerHTML = "Seccion de alta abierta";
+             div.appendChild(p1);
+             document.getElementById('boton').disabled=true;
+     
+         } else {
+             console.log("Se mete dentro de la primera condicion");
+             p1.innerHTML = "Esta fuera del horario. Solo es posible dar de alta libros de lunes a viernes de 9:00 a 19:00";
+             div.appendChild(p1);
+         }
 
-    // controlar día de la semana
-    let date = new Date();
-   let diaSemana = date.getDay();
-
-    // controlar hora
-    let idInterval=setInterval(function() {
+            /**    let idInterval=setInterval(function() {
         let date = new Date();
         let hora = date.getHours();
          console.log(hora);
     }, 60000);
 
-    // variable div
-    let div = document.getElementById("abajo");
-    let p1 = document.createElement("p");
-    let p2 = document.createElement("p");
-    let p3 = document.createElement("p");
+       let idInterval=setInterval(function() {
+        let myDate = new Date();
+        let horas = myDate.getHours();
+        let minutos = myDate.getMinutes();
+        let segundos = myDate.getSeconds();
+        if (horas < 10) horas = 0 + horas;
+        if (minutos < 10) minutos = "0" + minutos;
+        if (segundos < 10) segundos = "0" + segundos;
+         console.log(hora);
+         console.log(minutos);
+         console.log(segundos);
+    }, 1000);
 
-    
-    if((diaSemana == 6,7) ){
-        p1.innerHTML= "En días festivos no es posible dar de alta a nuevos libros.";
-        div.appendChild(p1);
-        document.getElementById('boton').disabled=false;
 
-    } else if( 9 < idInterval < 19) {
-        p2.innerHTML = "Seccion de alta abierta";
-        div.appendChild(p2);
-        document.getElementById('boton').disabled=true;
 
-    } else {
-        p2.innerHTML = "Esta fuera del horario. Solo es posible dar de alta libros de lunes a viernes de 9:00 a 19:00";
-        div.appendChild(p3);
-    }
+     * 
+     */
+     
+
 
 
 }
