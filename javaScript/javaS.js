@@ -25,39 +25,41 @@ var arrayLibros = [];  // aquí dentro van los objetos-
 function recogidaDatosFormulario(){
 
     // luego colocarlo en ultima posición p
-    let nombreLibro = document.getElementById("nombreLibro").value;
-    let identificador = document.getElementById("identificador").value;
-    let fecha = document.getElementById("fecha").value;
-    let numCopias = document.getElementById("numCopias").value;
-    let edad = document.getElementById("edad").value;
+    var nombreLibro = document.getElementById("nombreLibro").value;
+    var identificador = document.getElementById("identificador").value;
+    var fecha = document.getElementById("fecha").value;
+    var numCopias = document.getElementById("numCopias").value;
+    var edad = document.getElementById("edad").value;
 
-    let libroMas = new Libro(nombreLibro,identificador,fecha,numCopias,edad);
+    var libroMas = new Libro(nombreLibro,identificador,fecha,numCopias,edad);
     console.log(libroMas);
     
     arrayLibros = JSON.parse(localStorage.getItem("miarray") || "[]");
 
    /*metemos el libro en el array */
     arrayLibros.forEach(elemento => { 
-                                    console.log(elemento.identificador);
-                                    if (elemento.identificador == document.getElementById("identificador").value){
-                                        console.log("coincide")
+         console.log(elemento.identificador);
+        if (elemento.identificador == document.getElementById("identificador").value){
+            console.log("coincide")
                                         
-                                        elemento.numCopias ++;
-                                        console.log("Lo incrementa");
+            elemento.numCopias ++;
+            console.log("Lo incrementa");
                                         
-                                    } else {
-                                        console.log("no coincide")
-                                        arrayLibros.push(libroMas);
-                                    }
-                                    });
-                                    console.log(arrayLibros);
-     if(arrayLibros.length == 0) {
+        } else {
+            console.log("no coincide")
+            arrayLibros.push(libroMas);
+            }
+            });
+            console.log(arrayLibros);
+
+        if(arrayLibros.length == 0) {
          arrayLibros.push(libroMas); 
          console.log(arrayLibros);
-     }     
-     
+     }
+         
     /*Almacenamos el array en el localstorage */
     localStorage.setItem("miarray", JSON.stringify(arrayLibros));
+    }
 
     /**
      * 
@@ -85,36 +87,6 @@ function recogidaDatosFormulario(){
 
     // SI LO METO DENTRO DL BUCLE NO ME RECOGE VALORES
 
-
-}
-
-
-/********************************************************************************** */
-
-/**
- * // Función que recoge todos los eventos al cargar la pagina
-window.onload = function(){
-    let formulario = document.getElementById("form")
-    
-
-    formulario.addEventListener("submit", event=>{
-        event.preventDefault();
-        console.log("Entra dentro addEventListener para todook");
-        // preguntar por qué no se mete
-        let todoOk = validacionesFormulario(event);
-        console.log(todoOk);
-        if(!todoOk){
-            console.log("okok");
-           window.open("./ventana.html", "pop-up", "width=500px height=300px");
-        }
-    },false);
-    // llamar diversos métodos
-    // tooltip
-    // los que sean
-} 
-
- * 
- */
 window.onload = function(){
     document.getElementById("form").addEventListener('submit',validacionesFormulario,false); 
     document.getElementById("form").addEventListener('submit',imprimir,false); 
@@ -123,22 +95,40 @@ window.onload = function(){
         console.log("Entra dentro del select");
         creacionInputLiteratura();
     },false);
+    document.getElementById("form").addEventListener('submit',recogidaDatosFormulario,false);
 }
 
 
 
-
+var librolibro = new Libro('oscar','_555:5556L','12-28-2000',2,5);
 /** Impresión de datos */
 function imprimir(){
     let divEscribir;
     let contenidoFinal = " ";
+    let claves = Object.keys(libroMas);
+    divEscribir = document.getElementById("derecho");
 
-    divEscribir = document.getElementById("contenidoCentral");
+    for(i=0; i < claves.length;i++){
+        //contenidoFinal += "<p>" +
+        let clave = claves[i];
+        console.log(librolibro[clave]);
+        alert("Nombre del libro: " + nombre[i]);
+        //contenidoFinal += "<p>" + " Nombre del libro: " +  nombreLibro[i] + "</p>";
+    }
 
-    for(i=0; i < arrayLibros.length;i++){
+    /**
+     *     for(i=0; i < arrayLibros.length;i++){
         //contenidoFinal += "<p>" +
         console.log(arrayLibros[i]); 
     }
+     * 
+     */
+}
+
+/*********************************************/
+
+function cambiarSelect(){
+
 }
 
 
@@ -271,7 +261,7 @@ function validacionesFormulario(event){
              let date = new Date();
              let hora = date.getHours();
               console.log(hora);
-         }, 1000);
+         }, 60000);
      
          
      
@@ -309,7 +299,7 @@ function validacionesFormulario(event){
              document.getElementById('boton').disabled=false;
      
          } else if(diaSemana == 0){
-             
+
              p1.innerHTML= "En días festivos no es posible dar de alta a nuevos libros.";
              div.appendChild(p1);
              document.getElementById('boton').disabled=false;
