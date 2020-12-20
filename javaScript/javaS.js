@@ -103,17 +103,20 @@ window.onload = function(){
 var librolibro = new Libro('oscar','_555:5556L','12-28-2000',2,5);
 /** Impresión de datos */
 function imprimir(){
-    let divEscribir;
+
     let contenidoFinal = " ";
-    let claves = Object.keys(libroMas);
-    divEscribir = document.getElementById("derecho");
+    let claves = Object.keys(librolibro);
+    let divEscribir = document.getElementById("derecho");
+    //let parrafo = document.createElement("p");
+    let parrafo = document.getElementById("p1");
 
     for(i=0; i < claves.length;i++){
         //contenidoFinal += "<p>" +
         let clave = claves[i];
         console.log(librolibro[clave]);
-        alert("Nombre del libro: " + nombre[i]);
-        //contenidoFinal += "<p>" + " Nombre del libro: " +  nombreLibro[i] + "</p>";
+        parrafo.innerHTML += "<p>" + " Nombre del libro: " +  clave + "</p>";
+        
+
     }
 
     /**
