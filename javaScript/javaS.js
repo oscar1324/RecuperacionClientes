@@ -1,10 +1,10 @@
 // arrays al introducir nuevo ejemplar
 
 class Libro {
-    constructor(nombre,identificador, añoPublicacion, numCopias, edadReco){
+    constructor(nombre,identificador, anoPublicacion, numCopias, edadReco){
         this.nombre = nombre;
         this.identificador = identificador;
-        this.añoPublicacion = añoPublicacion;
+        this.anoPublicacion = anoPublicacion;
         this.numCopias = numCopias;
         this.edadReco = edadReco;
         // no sé si añadir observaciones, supongo que si
@@ -12,15 +12,14 @@ class Libro {
 }
 
 class LibroInfantil extends Libro{
-    constructor(nombre,identificador, añoPublicacion, numCopias, edadReco, fecha){
-        super(nombre,identificador, añoPublicacion, numCopias, edadReco);
+    constructor(nombre,identificador, anoPublicacion, numCopias, edadReco, fecha){
+        super(nombre,identificador, anoPublicacion, numCopias, edadReco);
         this.fecha = fecha;
     }
 }
 
 // crear objetos además de variables donde meto los valores para rellenar obejtos
 var arrayLibros = [];  // aquí dentro van los objetos-
-
 
 function recogidaDatosFormulario(){
 
@@ -61,96 +60,52 @@ function recogidaDatosFormulario(){
     localStorage.setItem("miarray", JSON.stringify(arrayLibros));
     }
 
-    /**
-     * 
-     *        for(i=0; i < arrayLibros.length; i++){
-        console.log("Los identificadores: " + arrayLibros[i].identificador);
-        if(idFormulario !== arrayLibros[i].identificador){
-            let nombreLibro = document.getElementById("nombreLibro").value;
-            let identificador = document.getElementById("identificador").value;
-            let fecha = document.getElementById("fecha").value;
-            let numCopias = document.getElementById("numCopias").value;
-            let edad = document.getElementById("edad").value;
-        
-            let libroMas = new Libro(nombreLibro,identificador,fecha,numCopias,edad);
-            arrayLibros.push(libroMas);
-            console.log("Se ha dado de alta");
-            return 1;
-
-        } else if(idFormulario == arrayLibros[i].identificador) {
-            arrayLibros[i].numCopias ++;
-            return 2;
-        }
-       
-    }
-     */
-
-    // SI LO METO DENTRO DL BUCLE NO ME RECOGE VALORES
-
 window.onload = function(){
     document.getElementById("form").addEventListener('submit',validacionesFormulario,false); 
     document.getElementById("form").addEventListener('submit',imprimir,false); 
-    document.getElementById("form").addEventListener('submit',avisoRojo,false);
     document.getElementById("select").addEventListener("change", event =>{
         console.log("Entra dentro del select");
         creacionInputLiteratura();
+        //imprimir();
     },false);
     document.getElementById("form").addEventListener('submit',recogidaDatosFormulario,false);
+
+    var idInterval=setInterval(function() {
+         avisoRojo();
+    }, 3000);
 }
 
-
-
-var librolibro = new Libro('oscar','_555:5556L','12-28-2000',2,5);
 /** Impresión de datos */
 function imprimir(){
+    event.preventDefault();
+    //Consigo los datos guardados en el LocalStorage
+    //var datos = localStorage.getItem("miarray");
+    var datos = JSON.parse(localStorage.getItem("usuario"));
 
-    let contenidoFinal = " ";
-    let claves = Object.keys(librolibro);
-    let divEscribir = document.getElementById("derecho");
-    //let parrafo = document.createElement("p");
-    let parrafo = document.getElementById("p1");
-
-    for(i=0; i < claves.length;i++){
+    for(i=0; i < datos.length;i++){
+        console.log(datos[i]);
         //contenidoFinal += "<p>" +
-        let clave = claves[i];
-        console.log(librolibro[clave]);
-        parrafo.innerHTML += "<p>" + " Nombre del libro: " +  clave + "</p>";
-        
-
+        console.log("Edad recomendada: " + datos[i].edadReco);
+        //console.log(datos[i].nombre + " --- " + datos[i].numCopias); 
+        //parrafo.innerHTML += "<p>" + " Nombre del libro: " +  clave + "</p>";
     }
 
-    /**
-     *     for(i=0; i < arrayLibros.length;i++){
-        //contenidoFinal += "<p>" +
-        console.log(arrayLibros[i]); 
-    }
-     * 
-     */
+
+    // REALIZAR ESTRUCTURA IF ELSE Y CAMBIAR A CHANGE METODO
 }
-
-/*********************************************/
-
-function cambiarSelect(){
-
-}
-
-
-
-
-
 
 // Función que reliza la validación del formulario
 function validacionesFormulario(event){
     ventana =  window.open("./ventana.html", "pop-up", "width=500,height=300, toolbar=false, menubar=false, location=false");
-    
+    event.preventDefault();
     let todoOK= true;
     // validación nombre
     if(!document.getElementById("nombreLibro").validity.valid){
         console.log("Entra if");
         document.getElementById("nombreLibro").color= "red";
-        event.preventDefault();
+ 
         todoOK= false;
-       ventana.document.write("Error en el nombre" + "<br>");
+        ventana.document.write("Error en el nombre" + "<br>");
         
     } else {
         console.log("Entra black");
@@ -160,7 +115,7 @@ function validacionesFormulario(event){
     // validación del identificador
     if(!document.getElementById("identificador").validity.valid){
         console.log("entra if identificador");
-        event.preventDefault();   
+   
         todoOK= false;
         ventana.document.write("Error en el identificador" + "<br>");
     } else {
@@ -169,7 +124,6 @@ function validacionesFormulario(event){
 
     // validación de fecha
     if(!document.getElementById("fecha").validity.valid){
-        event.preventDefault();
         todoOK= false;
         var hoy = new Date();
         if(!document.getElementById("fecha").value > hoy){
@@ -186,7 +140,6 @@ function validacionesFormulario(event){
 
     // validación numero copias
     if(!document.getElementById("numCopias").validity.valid){
-        event.preventDefault();
         todoOK= false;
         ventana.document.write("Error en el número de copias" + "<br>");
     } else {
@@ -196,7 +149,6 @@ function validacionesFormulario(event){
 
     // validación de la edad recomendada
     if(!document.getElementById("edad").validity.valid){
-        event.preventDefault();
         todoOK= false;
         ventana.document.write("Error en la edad" + "<br>");
     } else {
@@ -206,7 +158,6 @@ function validacionesFormulario(event){
 
     // validación de observación
     if(!document.getElementById("zonaTexto").validity.valid){
-        event.preventDefault();
         ventana.document.write("Error en las observaciones " + "<br>" );
     } else{
         console.log("error validación");
@@ -214,7 +165,6 @@ function validacionesFormulario(event){
 
      // validación de creacionInput
     if(!document.getElementById("literaturaCampo").validity.valid){
-     event.preventDefault();
       ventana.document.write("Error en literaturaCampo " + "<br>" );
     } else{
         console.log("error validación");
@@ -226,14 +176,12 @@ function validacionesFormulario(event){
 
  // creación de campoMas si selecciona literatura infantil
  function creacionInputLiteratura(){
-    let valor2 = document.getElementById("valor2").value;
-    let valor3 = document.getElementById("valor3").value;
-    let valor4 = document.getElementById("valor4").value;
+    let valor2 = document.getElementById("select").value;
     console.log("valor: " + valor2);
+    let campoInput = document.getElementById("campoMas");
     // finalizar bien con otro tipo de comprobacion
-    if(valor2 == 2){
+    if(valor2 == '2'){
         console.log("Entra en creacionInputLiteratura()");
-        let campoInput = document.getElementById("campoMas");
         let labelCampo = document.createElement("label");
         let campo = document.createElement("input");
       
@@ -246,7 +194,9 @@ function validacionesFormulario(event){
         campo.setAttribute("name","literaturaCampo");
         campo.setAttribute("type","text");
         campo.setAttribute("required","");
-    } 
+    } else {
+        campoInput.innerHTML = "             ";
+    }
     
  }
 
@@ -260,62 +210,47 @@ function validacionesFormulario(event){
         console.log(diaSemana);
      
          // controlar hora
-         let idInterval=setInterval(function() {
-             let date = new Date();
-             let hora = date.getHours();
-              console.log(hora);
-         }, 60000);
-     
-         
+        let hora = date.getHours();
      
          // variable div
          let div = document.getElementById("abajo");
-         let p1 = document.createElement("p");
-     
-     
+
+         // buscar elemento de tipo input el valor disabled
          if(diaSemana == 1){
-             p1.innerHTML =" Seccion de alta abierta";
-             div.appendChild(p1);
+             div.innerHTML = "Seccion de alta abierta";
+             document.getElementById('boton').disabled=true;
+
          } else if(diaSemana == 2){
-             p1.innerHTML = "Seccion de alta abierta";
-             div.appendChild(p1);
+            div.innerHTML = "Seccion de alta abierta";
              document.getElementById('boton').disabled=true;
      
          } else if(diaSemana == 3){
-             p1.innerHTML = "Seccion de alta abierta";
-             div.appendChild(p1);
+            div.innerHTML = "Seccion de alta abierta";
              document.getElementById('boton').disabled=true;
      
          } else if(diaSemana == 4){
-             p1.innerHTML = "Seccion de alta abierta";
-             div.appendChild(p1);
+            div.innerHTML = "Seccion de alta abierta";
              document.getElementById('boton').disabled=true;
      
          } else if(diaSemana == 5){
-             p1.innerHTML = "Seccion de alta abierta";
-             div.appendChild(p1);
+            div.innerHTML = "Seccion de alta abierta";
              document.getElementById('boton').disabled=true;
      
          } else if(diaSemana == 6){
-             p1.innerHTML= "En días festivos no es posible dar de alta a nuevos libros.";
-             div.appendChild(p1);
+             div.innerHTML= "En días festivos no es posible dar de alta a nuevos libros.";
              document.getElementById('boton').disabled=false;
      
          } else if(diaSemana == 0){
-
-             p1.innerHTML= "En días festivos no es posible dar de alta a nuevos libros.";
-             div.appendChild(p1);
+            div.innerHTML= "En días festivos no es posible dar de alta a nuevos libros.";
              document.getElementById('boton').disabled=false;
-         } else if( 9 < idInterval < 19) {
-             console.log(idInterval);
-             p1.innerHTML = "Seccion de alta abierta";
-             div.appendChild(p1);
+
+         } else if( 9 < hora < 19) {
+             div.innerHTML = "Seccion de alta abierta";
              document.getElementById('boton').disabled=true;
      
          } else {
              console.log("Se mete dentro de la primera condicion");
-             p1.innerHTML = "Esta fuera del horario. Solo es posible dar de alta libros de lunes a viernes de 9:00 a 19:00";
-             div.appendChild(p1);
+             div.innerHTML = "Esta fuera del horario. Solo es posible dar de alta libros de lunes a viernes de 9:00 a 19:00";
          }
 
             /**    let idInterval=setInterval(function() {
