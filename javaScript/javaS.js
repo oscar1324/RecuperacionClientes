@@ -74,11 +74,11 @@ function recogidaDatosFormulario(){
 
 window.onload = function(){
     document.getElementById("form").addEventListener('submit',validacionesFormulario,false); 
-    document.getElementById("form").addEventListener('submit',imprimir,false); 
+    document.getElementById("form").addEventListener('submit',imprimirTodos,false); 
     document.getElementById("select").addEventListener("change", event =>{
         console.log("Entra dentro del select");
         creacionInputLiteratura();
-        //imprimir();
+        imprimir();
     },false);
     document.getElementById("form").addEventListener('submit',recogidaDatosFormulario,false);
 
@@ -98,26 +98,33 @@ function imprimir(){
 
     if (valor == '2'){
         for(i=0; i < datos.length;i++){
-            p.innerHTML = "<p> " + "Nombre del libro infantil: " + datos[i].nombre + "</p>";
+            p.innerHTML += "<p> " + "Nombre del libro infantil: " + datos[i].nombre + "</p>";
             div.appendChild(p);
         }
     } else if(valor == '3') {
         for(i=0; i < datos.length;i++){
-            p.innerHTML = "<p> " + "Nombre del libro juvenil: " + datos[i].nombre + "</p>";
+            p.innerHTML += "<p> " + "Nombre del libro juvenil: " + datos[i].nombre + "</p>";
             div.appendChild(p);
         }
     } else if(valor == '4') {
         for(i=0; i < datos.length;i++){
-            p.innerHTML = "<p> " + "Nombre del libro adulto: " + datos[i].nombre + "</p>";
+            p.innerHTML += "<p> " + "Nombre del libro adulto: " + datos[i].nombre + "</p>";
             div.appendChild(p);
         }
     } else {
         for(i=0; i < datos.length;i++){
-            p.innerHTML = "<p> " + "Nombre de todos los libros: " + datos[i].nombre + "</p>";
+            p.innerHTML += "<p> " + "Nombre de todos los libros: " + datos[i].nombre + "</p>";
             div.appendChild(p);
         }
     }
     // REALIZAR ESTRUCTURA IF ELSE Y CAMBIAR A CHANGE METODO
+}
+
+function imprimirTodos(){
+    for(i=0; i < datos.length;i++){
+        p.innerHTML += "<p> " + "Nombre de todos los libros: " + datos[i].nombre + "</p>";
+        div.appendChild(p);
+    }
 }
 
 // Función que reliza la validación del formulario
