@@ -47,10 +47,10 @@ body{
 
     
 }
-
 input:invalid{
     border: 3px solid red;
 }
+
 
 textarea:focus, input:focus, input[type]:focus {
     border-color: red;

@@ -17,6 +17,18 @@ class LibroInfantil extends Libro{
         this.fecha = fecha;
     }
 }
+class LibroJuvenil extends Libro{
+    constructor(nombre,identificador, anoPublicacion, numCopias, edadReco, fecha){
+        super(nombre,identificador, anoPublicacion, numCopias, edadReco);
+        this.fecha = fecha;
+    }
+}
+class LibroAdulto extends Libro{
+    constructor(nombre,identificador, anoPublicacion, numCopias, edadReco, fecha){
+        super(nombre,identificador, anoPublicacion, numCopias, edadReco);
+        this.fecha = fecha;
+    }
+}
 
 // crear objetos además de variables donde meto los valores para rellenar obejtos
 var arrayLibros = [];  // aquí dentro van los objetos-
@@ -72,25 +84,39 @@ window.onload = function(){
 
     var idInterval=setInterval(function() {
          avisoRojo();
-    }, 3000);
+    }, 60000);
 }
 
 /** Impresión de datos */
 function imprimir(){
     event.preventDefault();
-    //Consigo los datos guardados en el LocalStorage
-    //var datos = localStorage.getItem("miarray");
-    var datos = JSON.parse(localStorage.getItem("usuario"));
+    let valor = document.getElementById("select").value;
+    var datos = JSON.parse(localStorage.getItem("miarray"));
+    let div = document.getElementById("derecho");
+    let p = document.createElement("p");
 
-    for(i=0; i < datos.length;i++){
-        console.log(datos[i]);
-        //contenidoFinal += "<p>" +
-        console.log("Edad recomendada: " + datos[i].edadReco);
-        //console.log(datos[i].nombre + " --- " + datos[i].numCopias); 
-        //parrafo.innerHTML += "<p>" + " Nombre del libro: " +  clave + "</p>";
+
+    if (valor == '2'){
+        for(i=0; i < datos.length;i++){
+            p.innerHTML = "<p> " + "Nombre del libro infantil: " + datos[i].nombre + "</p>";
+            div.appendChild(p);
+        }
+    } else if(valor == '3') {
+        for(i=0; i < datos.length;i++){
+            p.innerHTML = "<p> " + "Nombre del libro juvenil: " + datos[i].nombre + "</p>";
+            div.appendChild(p);
+        }
+    } else if(valor == '4') {
+        for(i=0; i < datos.length;i++){
+            p.innerHTML = "<p> " + "Nombre del libro adulto: " + datos[i].nombre + "</p>";
+            div.appendChild(p);
+        }
+    } else {
+        for(i=0; i < datos.length;i++){
+            p.innerHTML = "<p> " + "Nombre de todos los libros: " + datos[i].nombre + "</p>";
+            div.appendChild(p);
+        }
     }
-
-
     // REALIZAR ESTRUCTURA IF ELSE Y CAMBIAR A CHANGE METODO
 }
 
@@ -218,23 +244,18 @@ function validacionesFormulario(event){
          // buscar elemento de tipo input el valor disabled
          if(diaSemana == 1){
              div.innerHTML = "Seccion de alta abierta";
-             document.getElementById('boton').disabled=true;
-
+        
          } else if(diaSemana == 2){
-            div.innerHTML = "Seccion de alta abierta";
-             document.getElementById('boton').disabled=true;
+            div.innerHTML = "Seccion de alta abierta"; 
      
          } else if(diaSemana == 3){
-            div.innerHTML = "Seccion de alta abierta";
-             document.getElementById('boton').disabled=true;
+            div.innerHTML = "Seccion de alta abierta"; 
      
          } else if(diaSemana == 4){
             div.innerHTML = "Seccion de alta abierta";
-             document.getElementById('boton').disabled=true;
      
          } else if(diaSemana == 5){
             div.innerHTML = "Seccion de alta abierta";
-             document.getElementById('boton').disabled=true;
      
          } else if(diaSemana == 6){
              div.innerHTML= "En días festivos no es posible dar de alta a nuevos libros.";
@@ -246,38 +267,10 @@ function validacionesFormulario(event){
 
          } else if( 9 < hora < 19) {
              div.innerHTML = "Seccion de alta abierta";
-             document.getElementById('boton').disabled=true;
      
          } else {
              console.log("Se mete dentro de la primera condicion");
              div.innerHTML = "Esta fuera del horario. Solo es posible dar de alta libros de lunes a viernes de 9:00 a 19:00";
          }
-
-            /**    let idInterval=setInterval(function() {
-        let date = new Date();
-        let hora = date.getHours();
-         console.log(hora);
-    }, 60000);
-
-       let idInterval=setInterval(function() {
-        let myDate = new Date();
-        let horas = myDate.getHours();
-        let minutos = myDate.getMinutes();
-        let segundos = myDate.getSeconds();
-        if (horas < 10) horas = 0 + horas;
-        if (minutos < 10) minutos = "0" + minutos;
-        if (segundos < 10) segundos = "0" + segundos;
-         console.log(hora);
-         console.log(minutos);
-         console.log(segundos);
-    }, 1000);
-
-
-
-     * 
-     */
-     
-
-
 
 }
